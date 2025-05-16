@@ -1,0 +1,56 @@
+{
+  "configVersion": "v3",
+  "app": {
+    "appId": 1082225,
+    "appName": "Hands7",
+    "appType": "watchface",
+    "version": {
+      "code": 3,
+      "name": "1.0.17"
+    },
+    "icon": "icon.png",
+    "vender": "dtsd",
+    "cover": [
+      "cover.png"
+    ],
+    "description": "Hands7 watchface. Derived from here: https://github.com/novvember/amazfit-watchfaces"
+  },
+  "runtime": {
+    "apiVersion": {
+      "compatible": "1.0.0",
+      "target": "1.0.1",
+      "minVersion": "1.0.0"
+    }
+  },
+  "permissions": [],
+  "targets": {
+    "common": {
+      "module": {
+        "watchface": {
+          "path": "watchface/index",
+          "main": 1,
+          "editable": 0
+        }
+      },
+      "platforms": [
+        {
+          "st": "r"
+        }
+      ],
+      "designWidth": 480
+    }
+  },
+  "i18n": {
+    "en-US": {
+      "appName": "Hands7"
+    },
+    "ru-RU": {
+      "appName": "Hands7"
+    },
+    "uk-UA": {
+      "appName": "Hands7"
+    }
+  },
+  "defaultLanguage": "en-US",
+  "debug": false
+}
