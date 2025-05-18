@@ -1,4 +1,4 @@
-import { COLORS, FONT, SCREEN } from '../utils/constants';
+import { COLORS, FONT, FONT_ROTATED, SCREEN } from '../utils/constants';
 
 export const BACKGROUND_IMAGE_PROPS = {
   x: 0,
@@ -89,6 +89,11 @@ export const OUTER_TEXT_PROPS = {
   end_angle: -45,
   font: FONT,
   show_level: hmUI.show_level.ONLY_NORMAL,
+};
+
+export const OUTER_TEXT_ROTATED_PROPS = {
+	... OUTER_TEXT_PROPS,
+	font: FONT_ROTATED
 };
 
 
