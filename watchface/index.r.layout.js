@@ -110,8 +110,8 @@ export const MINUTE_POINTER_PROPS = {
   minute_path: 'time/m.png',
 
   minute_cover_path: 'time/mc.png',
-  minute_cover_x: SCREEN.centerX - px(40 / 2),
-  minute_cover_y: SCREEN.centerY - px(40 / 2),
+  minute_cover_x: SCREEN.centerX - px(20),
+  minute_cover_y: SCREEN.centerY - px(20),
 
   show_level: hmUI.show_level.ONLY_NORMAL | hmUI.show_level.ONAL_AOD,
 };
@@ -124,8 +124,8 @@ export const SECOND_POINTER_PROPS = {
   second_path: 'time/s.png',
 
   second_cover_path: 'time/sc.png',
-  second_cover_x: SCREEN.centerX - px(40 / 2),
-  second_cover_y: SCREEN.centerY - px(40 / 2),
+  second_cover_x: SCREEN.centerX - px(20),
+  second_cover_y: SCREEN.centerY - px(20),
 
   show_level: hmUI.show_level.ONLY_NORMAL,
 };
