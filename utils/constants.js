@@ -18,6 +18,7 @@ export const COLORS = {
 };
 
 export const FONT = 'fonts/RobotoCondensed-Medium.ttf';
+export const FONT_ROTATED = 'fonts/RobotoCondensed-Medium_rotated.ttf';
 
 const WEEKDAYS_EN = [
   'MON',

@@ -8,6 +8,7 @@ import {
   MINUTE_TEXT_PROPS,
   OUTER_IMAGE_PROPS,
   OUTER_TEXT_PROPS,
+  OUTER_TEXT_ROTATED_PROPS,
   SLEEP_ARC_PROPS,
   SUN_ARC_PROPS,
   HOUR_POINTER_PROPS,
@@ -137,6 +138,34 @@ WatchFace({
 
   buildHeartRate() {
     const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
+      ...OUTER_TEXT_ROTATED_PROPS,
+      start_angle: 120,
+      end_angle: 180,
+    });
+
+    const heartSensor = hmSensor.createSensor(hmSensor.id.HEART);
+
+    const update = () => {
+      const { last } = heartSensor;
+      const text = `BPM ${last}`.toUpperCase().split('').reverse().join('');
+      textWidget.setProperty(hmUI.prop.TEXT, text);
+    };
+
+    hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
+      resume_call: () => {
+        if (hmSetting.getScreenType() == hmSetting.screen_type.WATCHFACE) {
+          heartSensor.addEventListener?.(hmSensor.event.LAST, update);
+          update();
+        }
+      },
+      pause_call: () => {
+        heartSensor.removeEventListener?.(hmSensor.event.LAST, update);
+      },
+    });
+  },
+
+  buildFloors() {
+    const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
       ...OUTER_TEXT_PROPS,
       start_angle: 120,
       end_angle: 180,
@@ -193,7 +222,7 @@ WatchFace({
 
   buildSteps() {
     const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
-      ...OUTER_TEXT_PROPS,
+      ...OUTER_TEXT_ROTATED_PROPS,
       start_angle: -180,
       end_angle: -120,
     });
@@ -202,7 +231,7 @@ WatchFace({
 
     const update = () => {
       const { current } = stepSensor;
-      const text = `STP ${current}`.toUpperCase();
+      const text = `STP ${current}`.toUpperCase().split('').reverse().join('');
 
       textWidget.setProperty(hmUI.prop.TEXT, text);
     };
