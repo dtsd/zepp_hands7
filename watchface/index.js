@@ -1,5 +1,5 @@
 import { SCREEN, MONTHS, STEPS_TEXT, WEEKDAYS, WEATHER_NAMES } from '../utils/constants';
-import { formatNumber } from '../utils/formatNumber';
+import { formatStepCount } from '../utils/formatStepCount';
 import { decline } from '../utils/decline';
 import {
   BACKGROUND_IMAGE_PROPS,
@@ -203,7 +203,7 @@ WatchFace({
 
     const update = () => {
       const { current } = stepSensor;
-      const text = `STP ${current}`.toUpperCase().split('').reverse().join('');
+      const text = `STP ${formatStepCount(current)}`.toUpperCase().split('').reverse().join('');
 
       textWidget.setProperty(hmUI.prop.TEXT, text);
     };
