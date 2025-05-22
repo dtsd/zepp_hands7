@@ -74,10 +74,10 @@ export const MINUTE_TEXT_PROPS = {
 };
 
 export const OUTER_TEXT_PROPS = {
-  x: 0 * px(6),
-  y: 0 * px(6),
-  w: SCREEN.width - px(0),
-  h: SCREEN.height - px(0),
+  x: px(15),
+  y: px(15),
+  w: SCREEN.width - px(30),
+  h: SCREEN.height - px(30),
   text_size: px(26),
   color: 0x808080,
   text: '',
