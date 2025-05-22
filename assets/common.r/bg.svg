@@ -9,7 +9,7 @@
    id="svg1"
    sodipodi:docname="bg.svg"
    inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
-   inkscape:export-filename="time/mc.png"
+   inkscape:export-filename="bg.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -27,9 +27,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
-     inkscape:zoom="1.4996199"
-     inkscape:cx="85.021543"
-     inkscape:cy="65.016474"
+     inkscape:zoom="1.0520833"
+     inkscape:cx="239.52475"
+     inkscape:cy="240"
      inkscape:window-width="1366"
      inkscape:window-height="707"
      inkscape:window-x="0"
@@ -550,7 +550,7 @@
      id="layer7"
      inkscape:label="mins 1">
     <circle
-       style="fill:#a89e00;fill-opacity:1;stroke:#000000;stroke-width:0.1"
+       style="fill:#ccc000;fill-opacity:1;stroke:#000000;stroke-width:0.1"
        id="path66"
        cx="63.499996"
        cy="8.3343744"
@@ -1070,54 +1070,122 @@
      id="layer6"
      inkscape:label="hours 1"
      style="display:inline">
-    <path
-       id="rect3"
-       style="fill:#a8a8a8;stroke:#000000;stroke-width:0.1;fill-opacity:1"
-       transform="scale(-1,1)"
-       d="m -63.499999,-11.641666 h 3e-6 c 1.026054,0 2.747929,0.831121 2.645833,1.8520835 l -0.79375,7.9374986 C -61.750009,-0.83112154 -62.473942,0 -63.499996,0 h -3e-6 c -1.026054,0 -1.749986,-0.83112153 -1.852082,-1.8520839 l -0.793749,-7.9374986 c -0.102096,-1.0209625 1.619777,-1.8520835 2.645831,-1.8520835 z"
-       sodipodi:nodetypes="sssssssss" />
+    <rect
+       style="fill:#cc0000;fill-opacity:1;stroke:#000000;stroke-width:0.1"
+       id="rect1"
+       width="2.645833"
+       height="10.583332"
+       x="62.177078"
+       y="-10.583332"
+       rx="1.3229165"
+       ry="1.3229159"
+       inkscape:tile-cx="63.499995"
+       inkscape:tile-cy="-5.291666"
+       inkscape:tile-w="2.745833"
+       inkscape:tile-h="10.683332"
+       inkscape:tile-x0="62.127078"
+       inkscape:tile-y0="-10.633332" />
     <use
        x="0"
        y="0"
-       inkscape:tiled-clone-of="#rect3"
-       xlink:href="#rect3"
-       transform="rotate(120,60.036912,57.501763)"
-       id="use61" />
+       inkscape:tiled-clone-of="#rect1"
+       xlink:href="#rect1"
+       transform="rotate(120,60.444852,58.208335)"
+       id="use245" />
     <use
        x="0"
        y="0"
-       inkscape:tiled-clone-of="#rect3"
-       xlink:href="#rect3"
-       transform="rotate(180,63.5,57.501761)"
-       id="use62" />
+       inkscape:tiled-clone-of="#rect1"
+       xlink:href="#rect1"
+       transform="rotate(-179.99999,63.499999,58.208331)"
+       id="use246" />
     <use
        x="0"
        y="0"
-       inkscape:tiled-clone-of="#rect3"
-       xlink:href="#rect3"
-       transform="rotate(-120.00001,66.963078,57.501757)"
-       id="use63" />
+       inkscape:tiled-clone-of="#rect1"
+       xlink:href="#rect1"
+       transform="rotate(-120.00001,66.555141,58.208329)"
+       id="use247" />
     <use
        x="0"
        y="0"
-       inkscape:tiled-clone-of="#rect3"
-       xlink:href="#rect3"
-       transform="rotate(-60,73.889255,57.501758)"
-       id="use64" />
+       inkscape:tiled-clone-of="#rect1"
+       xlink:href="#rect1"
+       transform="rotate(-60,72.665434,58.208333)"
+       id="use248" />
     <use
        x="0"
        y="0"
-       inkscape:tiled-clone-of="#rect3"
-       xlink:href="#rect3"
-       transform="translate(4.57099e-6,11.996481)"
-       id="use65" />
+       inkscape:tiled-clone-of="#rect1"
+       xlink:href="#rect1"
+       transform="translate(2.2849829e-6,10.583335)"
+       id="use249" />
     <use
        x="0"
        y="0"
-       inkscape:tiled-clone-of="#rect3"
-       xlink:href="#rect3"
-       transform="rotate(60.000001,53.110743,57.501767)"
-       id="use66" />
+       inkscape:tiled-clone-of="#rect1"
+       xlink:href="#rect1"
+       transform="rotate(59.999997,54.334564,58.208339)"
+       id="use250" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer8"
+     inkscape:label="hours 2">
+    <circle
+       style="fill:#cc0000;fill-opacity:1;stroke:#000000;stroke-width:0.1"
+       id="path250"
+       cx="63.499996"
+       cy="1.3229166"
+       r="1.3229165"
+       inkscape:tile-cx="63.499996"
+       inkscape:tile-cy="1.3229166"
+       inkscape:tile-w="2.745833"
+       inkscape:tile-h="2.745833"
+       inkscape:tile-x0="62.12708"
+       inkscape:tile-y0="-0.049999882" />
+    <use
+       x="0"
+       y="0"
+       inkscape:tiled-clone-of="#path250"
+       xlink:href="#path250"
+       transform="rotate(150.00001,63.5,63.500002)"
+       id="use251" />
+    <use
+       x="0"
+       y="0"
+       inkscape:tiled-clone-of="#path250"
+       xlink:href="#path250"
+       transform="rotate(-150.00001,63.499996,63.500001)"
+       id="use252" />
+    <use
+       x="0"
+       y="0"
+       inkscape:tiled-clone-of="#path250"
+       xlink:href="#path250"
+       transform="rotate(-90,63.5,63.500001)"
+       id="use253" />
+    <use
+       x="0"
+       y="0"
+       inkscape:tiled-clone-of="#path250"
+       xlink:href="#path250"
+       transform="rotate(-30.000004,63.499998,63.499993)"
+       id="use254" />
+    <use
+       x="0"
+       y="0"
+       inkscape:tiled-clone-of="#path250"
+       xlink:href="#path250"
+       transform="rotate(30.000001,63.500002,63.500004)"
+       id="use255" />
+    <use
+       x="0"
+       y="0"
+       inkscape:tiled-clone-of="#path250"
+       xlink:href="#path250"
+       transform="rotate(90,63.499998,63.500002)"
+       id="use256" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -1126,34 +1194,22 @@
      style="display:none">
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:8.46667px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, Bold Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#7a7a7a;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:8.46667px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, Bold Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#ccc000;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
        x="4.6348944"
        y="37.865166"
        id="text106"
        transform="rotate(-30)"><tspan
          sodipodi:role="line"
          id="tspan106"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:8.46667px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, Bold Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#7a7a7a;fill-opacity:1;stroke-width:0.1"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:8.46667px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, Bold Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ccc000;fill-opacity:1;stroke-width:0.1"
          x="4.6348944"
          y="37.865166">2025 MAY</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:8.46667px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, Bold Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#7a7a7a;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
-       x="39.645752"
-       y="-104.97304"
-       id="text107"
-       transform="rotate(90)"><tspan
-         sodipodi:role="line"
-         id="tspan107"
-         style="stroke-width:0.1"
-         x="39.645752"
-         y="-104.97304">10000 STP</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="hands"
-     style="display:inline">
+     style="display:none">
     <circle
        style="display:inline;fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:0.123062"
        id="path2"
