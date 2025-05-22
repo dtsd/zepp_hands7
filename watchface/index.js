@@ -164,34 +164,6 @@ WatchFace({
     });
   },
 
-  buildFloors() {
-    const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
-      ...OUTER_TEXT_PROPS,
-      start_angle: 120,
-      end_angle: 180,
-    });
-
-    const heartSensor = hmSensor.createSensor(hmSensor.id.HEART);
-
-    const update = () => {
-      const { last } = heartSensor;
-      const text = `BPM ${last}`.toUpperCase();
-      textWidget.setProperty(hmUI.prop.TEXT, text);
-    };
-
-    hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
-      resume_call: () => {
-        if (hmSetting.getScreenType() == hmSetting.screen_type.WATCHFACE) {
-          heartSensor.addEventListener?.(hmSensor.event.LAST, update);
-          update();
-        }
-      },
-      pause_call: () => {
-        heartSensor.removeEventListener?.(hmSensor.event.LAST, update);
-      },
-    });
-  },
-
   buildWeather() {
     const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
       ...OUTER_TEXT_PROPS,
