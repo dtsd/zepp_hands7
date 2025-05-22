@@ -79,7 +79,7 @@ export const OUTER_TEXT_PROPS = {
   w: SCREEN.width - px(0),
   h: SCREEN.height - px(0),
   text_size: px(26),
-  color: 0xffffff,
+  color: 0x808080,
   text: '',
   align_h: hmUI.align.CENTER_H,
   align_v: hmUI.align.TOP,
