@@ -7,6 +7,7 @@ import {
   INNER_IMAGE_PROPS,
   MINUTE_TEXT_PROPS,
   OUTER_IMAGE_PROPS,
+  BASE_TEXT_PROPS,
   OUTER_TEXT_PROPS,
   OUTER_TEXT_ROTATED_PROPS,
   SLEEP_ARC_PROPS,
@@ -83,6 +84,7 @@ WatchFace({
   buildDate() {
     const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
       ...OUTER_TEXT_PROPS,
+  show_level: hmUI.show_level.ONLY_NORMAL,
       start_angle: 0,
       end_angle: 60,
     });
@@ -137,30 +139,12 @@ WatchFace({
   },
 
   buildHeartRate() {
-    const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
+    const textWidget = hmUI.createWidget(hmUI.widget.TEXT_FONT, {
       ...OUTER_TEXT_ROTATED_PROPS,
       start_angle: 120,
       end_angle: 180,
-    });
-
-    const heartSensor = hmSensor.createSensor(hmSensor.id.HEART);
-
-    const update = () => {
-      const { last } = heartSensor;
-      const text = `BPM ${last}`.toUpperCase().split('').reverse().join('');
-      textWidget.setProperty(hmUI.prop.TEXT, text);
-    };
-
-    hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
-      resume_call: () => {
-        if (hmSetting.getScreenType() == hmSetting.screen_type.WATCHFACE) {
-          heartSensor.addEventListener?.(hmSensor.event.LAST, update);
-          update();
-        }
-      },
-      pause_call: () => {
-        heartSensor.removeEventListener?.(hmSensor.event.LAST, update);
-      },
+      type: hmUI.data_type.FLOOR,
+	  	unit_en: 'FLOOR',
     });
   },
 

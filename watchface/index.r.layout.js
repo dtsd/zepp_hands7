@@ -73,27 +73,30 @@ export const MINUTE_TEXT_PROPS = {
   align_h: hmUI.align.LEFT,
 };
 
-export const OUTER_TEXT_PROPS = {
-  x: px(15),
-  y: px(15),
-  w: SCREEN.width - px(30),
-  h: SCREEN.height - px(30),
+export const BASE_TEXT_PROPS = {
   text_size: px(32),
   color: 0xccc000,
-  text: '',
   align_h: hmUI.align.CENTER_H,
   align_v: hmUI.align.TOP,
   char_space: px(1),
   line_space: 0,
-  start_angle: -135,
-  end_angle: -45,
   font: FONT,
   show_level: hmUI.show_level.ONLY_NORMAL,
 };
 
+export const OUTER_TEXT_PROPS = {
+  ... BASE_TEXT_PROPS,
+  x: px(15),
+  y: px(15),
+  w: SCREEN.width - px(30),
+  h: SCREEN.height - px(30),
+  start_angle: -135,
+  end_angle: -45,
+};
+
 export const OUTER_TEXT_ROTATED_PROPS = {
 	... OUTER_TEXT_PROPS,
-	font: FONT_ROTATED
+	font: FONT_ROTATED,
 };
 
 
