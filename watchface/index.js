@@ -139,12 +139,36 @@ WatchFace({
   },
 
   buildHeartRate() {
-    const textWidget = hmUI.createWidget(hmUI.widget.TEXT_FONT, {
+    const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
       ...OUTER_TEXT_ROTATED_PROPS,
       start_angle: 120,
       end_angle: 180,
+    });
+
+    const heartSensor = hmSensor.createSensor(hmSensor.id.HEART);
+
+    const floorWidget = hmUI.createWidget(hmUI.widget.TEXT_FONT, {
+      ...BASE_TEXT_PROPS,
       type: hmUI.data_type.FLOOR,
-	  	unit_en: 'FLOOR',
+    });
+
+    const update = () => {
+	  const theWidget = floorWidget;
+      const text = theWidget.getProperty(hmUI.prop.TEXT);
+      const text2 = `FLOOR ${text}`.toUpperCase().split('').reverse().join('');
+      textWidget.setProperty(hmUI.prop.TEXT, text2);
+    };
+
+    hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
+      resume_call: () => {
+        if (hmSetting.getScreenType() == hmSetting.screen_type.WATCHFACE) {
+          heartSensor.addEventListener?.(hmSensor.event.LAST, update);
+          update();
+        }
+      },
+      pause_call: () => {
+        heartSensor.removeEventListener?.(hmSensor.event.LAST, update);
+      },
     });
   },
 
