@@ -156,8 +156,8 @@ WatchFace({
 
 	const index = weatherSensor.curAirIconIndex;
 	const hasName = !isNaN(index) && index !== 25;
-      let text = hasName ? `${WEATHER_NAMES[index]} ${temp}°` : `${temp}°`;
-      if (rotated) text = text.split('').reverse().join('');
+    let text = hasName ? `${WEATHER_NAMES[index]} ${temp}°` : `${temp}°`;
+    if (rotated) text = text.split('').reverse().join('');
 
       textWidget.setProperty(hmUI.prop.TEXT, text);
     };
