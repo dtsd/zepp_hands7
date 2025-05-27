@@ -7,7 +7,6 @@ import {
   INNER_IMAGE_PROPS,
   MINUTE_TEXT_PROPS,
   OUTER_IMAGE_PROPS,
-  BASE_TEXT_PROPS,
   OUTER_TEXT_PROPS,
   OUTER_TEXT_ROTATED_PROPS,
   SLEEP_ARC_PROPS,
@@ -26,21 +25,16 @@ WatchFace({
     console.log('index page.js on build invoke');
 
     this.buildBackground();
-
-    this.buildMonth();
-    this.buildDate();
-
-    this.buildBattery();
-    this.buildSteps();
-
-    this.buildWeather();
-    this.buildFloors();
-
+    this.buildEdgeWidgets();
     this.buildPointers();
   },
 
   onDestroy() {
     console.log('index page.js on destroy invoke');
+  },
+
+  buildBackground() {
+    hmUI.createWidget(hmUI.widget.IMG, BACKGROUND_IMAGE_PROPS);
   },
 
   buildPointers() {
@@ -49,28 +43,53 @@ WatchFace({
     hmUI.createWidget(hmUI.widget.TIME_POINTER, SECOND_POINTER_PROPS);
   },
 
-  buildBackground() {
-    hmUI.createWidget(hmUI.widget.IMG, BACKGROUND_IMAGE_PROPS);
+  buildEdgeWidgets() {
+    const widgetAngleMap = [
+      { id: 11, start_angle: -60, end_angle: 0 },
+      { id: 1, start_angle: 0, end_angle: 60 },
+      { id: 3, start_angle: 60, end_angle: 120 },
+      { id: 5, start_angle: 120, end_angle: 180 },
+      { id: 7, start_angle: -180, end_angle: -120 },
+      { id: 9, start_angle: -120, end_angle: -60 },
+    ];
+
+	const widgetBuilderMap = {
+  	  5: (start, end) => this.buildMonth(true, start, end),
+  	  7: (start, end) => this.buildDate(true, start, end),
+  	  3: (start, end) => this.buildTextFontWidget(hmUI.data_type.TRAINING_LOAD, 2, start, end),
+  	  9: (start, end) => this.buildTextFontWidget(hmUI.data_type.RECOVERY_TIME, 2, start, end),
+  	  //3: (start, end) => this.buildTextFontWidget(hmUI.data_type.TRAINING_LOAD, 2, start, end),
+  	  //9: (start, end) => this.buildTextFontWidget(hmUI.data_type.RECOVERY_TIME, 2, start, end),
+  	  11: (start, end) => this.buildTextFontWidget(hmUI.data_type.STEP, 2, start, end),
+  	  1: (start, end) => this.buildTextFontWidget(hmUI.data_type.FLOOR, 2, start, end),
+	};
+
+
+    widgetAngleMap.forEach(({ id, start_angle, end_angle }) => {
+      const builder = widgetBuilderMap[id];
+      builder(start_angle, end_angle);
+    });
   },
 
-  buildMonth() {
+  buildMonth(rotated, start_angle, end_angle) {
+    const props = rotated ? OUTER_TEXT_ROTATED_PROPS : OUTER_TEXT_PROPS;
     const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
-      ...OUTER_TEXT_PROPS,
-      start_angle: -60,
-      end_angle: 0,
+      ...props,
+      start_angle,
+      end_angle,
     });
 
     const timeSensor = hmSensor.createSensor(hmSensor.id.TIME);
-
     const update = () => {
-      const { day, week, month, year } = timeSensor;
-      const monthText = `${MONTHS[month - 1]} ${year}`;
-      textWidget.setProperty(hmUI.prop.TEXT, monthText);
+      const { month, year } = timeSensor;
+      let text = `${MONTHS[month - 1]} ${year}`;
+      if (rotated) text = text.split('').reverse().join('');
+      textWidget.setProperty(hmUI.prop.TEXT, text);
     };
 
     hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
       resume_call: () => {
-        if (hmSetting.getScreenType() == hmSetting.screen_type.WATCHFACE) {
+        if (hmSetting.getScreenType() === hmSetting.screen_type.WATCHFACE) {
           timeSensor.addEventListener?.(hmSensor.event.MINUTEEND, update);
           update();
         }
@@ -81,25 +100,26 @@ WatchFace({
     });
   },
 
-  buildDate() {
+  buildDate(rotated, start_angle, end_angle) {
+    const props = rotated ? OUTER_TEXT_ROTATED_PROPS : OUTER_TEXT_PROPS;
     const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
-      ...OUTER_TEXT_PROPS,
-  show_level: hmUI.show_level.ONLY_NORMAL,
-      start_angle: 0,
-      end_angle: 60,
+      ...props,
+      show_level: hmUI.show_level.ONLY_NORMAL,
+      start_angle,
+      end_angle,
     });
 
     const timeSensor = hmSensor.createSensor(hmSensor.id.TIME);
-
     const update = () => {
-      const { day, week, month } = timeSensor;
-      const dateText = `${WEEKDAYS[week - 1]} ${day}`;
-      textWidget.setProperty(hmUI.prop.TEXT, dateText);
+      const { day, week } = timeSensor;
+      let text = `${WEEKDAYS[week - 1]} ${day}`;
+      if (rotated) text = text.split('').reverse().join('');
+      textWidget.setProperty(hmUI.prop.TEXT, text);
     };
 
     hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
       resume_call: () => {
-        if (hmSetting.getScreenType() == hmSetting.screen_type.WATCHFACE) {
+        if (hmSetting.getScreenType() === hmSetting.screen_type.WATCHFACE) {
           timeSensor.addEventListener?.(hmSensor.event.MINUTEEND, update);
           update();
         }
@@ -110,45 +130,13 @@ WatchFace({
     });
   },
 
-  buildBattery() {
-    const textWidget = hmUI.createWidget(hmUI.widget.TEXT_FONT, {
+  buildTextFontWidget(type, unit_type, start_angle, end_angle) {
+    hmUI.createWidget(hmUI.widget.TEXT_FONT, {
       ...OUTER_TEXT_PROPS,
-      start_angle: 60,
-      end_angle: 120,
-      type: hmUI.data_type.BATTERY,
-	  unit_type: 2,
+      start_angle,
+      end_angle,
+      type,
+      unit_type,
     });
   },
-
-
-  buildFloors() {
-    const textWidget = hmUI.createWidget(hmUI.widget.TEXT_FONT, {
-      ...OUTER_TEXT_PROPS,
-      start_angle: 120,
-      end_angle: 180,
-      type: hmUI.data_type.FLOOR,
-	  unit_type: 2,
-    });
-  },
-
-  buildWeather() {
-    const textWidget = hmUI.createWidget(hmUI.widget.TEXT_FONT, {
-      ...OUTER_TEXT_PROPS,
-      start_angle: -120,
-      end_angle: -60,
-      type: hmUI.data_type.WEATHER,
-	  unit_type: 2,
-    });
-  },
-
-  buildSteps() {
-    const textWidget = hmUI.createWidget(hmUI.widget.TEXT_FONT, {
-      ...OUTER_TEXT_PROPS,
-      start_angle: -180,
-      end_angle: -120,
-      type: hmUI.data_type.STEP,
-	  unit_type: 2,
-    });
-  },
-
 });
