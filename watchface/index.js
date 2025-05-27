@@ -53,15 +53,16 @@ WatchFace({
       { id: 9, start_angle: -120, end_angle: -60 },
     ];
 
-	const widgetBuilderMap = {
-  	  5: (start, end) => this.buildMonth(true, start, end),
-  	  7: (start, end) => this.buildDate(true, start, end),
-  	  3: (start, end) => this.buildTextFontWidget(hmUI.data_type.TRAINING_LOAD, 2, start, end),
-  	  9: (start, end) => this.buildTextFontWidget(hmUI.data_type.RECOVERY_TIME, 2, start, end),
   	  //3: (start, end) => this.buildTextFontWidget(hmUI.data_type.TRAINING_LOAD, 2, start, end),
   	  //9: (start, end) => this.buildTextFontWidget(hmUI.data_type.RECOVERY_TIME, 2, start, end),
-  	  11: (start, end) => this.buildTextFontWidget(hmUI.data_type.STEP, 2, start, end),
+  	  //11: (start, end) => this.buildTextFontWidget(hmUI.data_type.STEP, 2, start, end),
+	const widgetBuilderMap = {
+  	  11: (start, end) => this.buildSteps(false, start, end),
   	  1: (start, end) => this.buildTextFontWidget(hmUI.data_type.FLOOR, 2, start, end),
+  	  3: (start, end) => this.buildTextFontWidget(hmUI.data_type.ALARM_CLOCK, 2, start, end),
+  	  9: (start, end) => this.buildWeather(false, start, end),
+  	  5: (start, end) => this.buildMonth(true, start, end),
+  	  7: (start, end) => this.buildDate(true, start, end),
 	};
 
 
@@ -137,6 +138,66 @@ WatchFace({
       end_angle,
       type,
       unit_type,
+    });
+  },
+
+  buildWeather(rotated, start_angle, end_angle) {
+    const props = rotated ? OUTER_TEXT_ROTATED_PROPS : OUTER_TEXT_PROPS;
+    const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
+      ...props,
+      start_angle,
+      end_angle,
+    });
+
+    const weatherSensor = hmSensor.createSensor(hmSensor.id.WEATHER);
+
+    const update = () => {
+      const temp = weatherSensor.current;
+
+	const index = weatherSensor.curAirIconIndex;
+	const hasName = !isNaN(index) && index !== 25;
+      let text = hasName ? `${WEATHER_NAMES[index]} ${temp}°` : `${temp}°`;
+      if (rotated) text = text.split('').reverse().join('');
+
+      textWidget.setProperty(hmUI.prop.TEXT, text);
+    };
+
+    hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
+      resume_call: () => {
+        if (hmSetting.getScreenType() == hmSetting.screen_type.WATCHFACE) {
+          update();
+        }
+      },
+    });
+  },
+
+  buildSteps(rotated, start_angle, end_angle) {
+    const props = rotated ? OUTER_TEXT_ROTATED_PROPS : OUTER_TEXT_PROPS;
+    const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
+      ...props,
+      start_angle,
+      end_angle,
+    });
+
+    const stepSensor = hmSensor.createSensor(hmSensor.id.STEP);
+
+    const update = () => {
+      const { current } = stepSensor;
+      let text = `STP ${formatStepCount(current)}`;
+      if (rotated) text = text.split('').reverse().join('');
+      textWidget.setProperty(hmUI.prop.TEXT, text);
+    };
+
+    hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
+      resume_call: () => {
+        if (hmSetting.getScreenType() == hmSetting.screen_type.WATCHFACE) {
+          stepSensor.addEventListener(hmSensor.event.CHANGE, update);
+          update();
+        }
+      },
+      pause_call: () => {
+        stepSensor.removeEventListener(hmSensor.event.CHANGE, update);
+      },
     });
   },
 });
