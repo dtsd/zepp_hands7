@@ -34,7 +34,7 @@ WatchFace({
     this.buildSteps();
 
     this.buildWeather();
-    this.buildHeartRate();
+    this.buildFloors();
 
     this.buildPointers();
   },
@@ -111,121 +111,43 @@ WatchFace({
   },
 
   buildBattery() {
-    const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
+    const textWidget = hmUI.createWidget(hmUI.widget.TEXT_FONT, {
       ...OUTER_TEXT_PROPS,
       start_angle: 60,
       end_angle: 120,
-    });
-
-    const batterySensor = hmSensor.createSensor(hmSensor.id.BATTERY);
-
-    const update = () => {
-      const { current } = batterySensor;
-      const text = `BAT ${current}%`;
-      textWidget.setProperty(hmUI.prop.TEXT, text);
-    };
-
-    hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
-      resume_call: () => {
-        if (hmSetting.getScreenType() == hmSetting.screen_type.WATCHFACE) {
-          batterySensor.addEventListener?.(hmSensor.event.CHANGE, update);
-          update();
-        }
-      },
-      pause_call: () => {
-        batterySensor.removeEventListener?.(hmSensor.event.CHANGE, update);
-      },
+      type: hmUI.data_type.BATTERY,
+	  unit_type: 2,
     });
   },
 
-  buildHeartRate() {
-    const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
-      ...OUTER_TEXT_ROTATED_PROPS,
+
+  buildFloors() {
+    const textWidget = hmUI.createWidget(hmUI.widget.TEXT_FONT, {
+      ...OUTER_TEXT_PROPS,
       start_angle: 120,
       end_angle: 180,
-    });
-
-    const heartSensor = hmSensor.createSensor(hmSensor.id.HEART);
-
-    const floorWidget = hmUI.createWidget(hmUI.widget.TEXT_FONT, {
-      ...BASE_TEXT_PROPS,
       type: hmUI.data_type.FLOOR,
-    });
-
-    const update = () => {
-	  const theWidget = floorWidget;
-      const text = theWidget.getProperty(hmUI.prop.TEXT);
-      const text2 = `FLOOR ${text}`.toUpperCase().split('').reverse().join('');
-      textWidget.setProperty(hmUI.prop.TEXT, text2);
-    };
-
-    hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
-      resume_call: () => {
-        if (hmSetting.getScreenType() == hmSetting.screen_type.WATCHFACE) {
-          heartSensor.addEventListener?.(hmSensor.event.LAST, update);
-          update();
-        }
-      },
-      pause_call: () => {
-        heartSensor.removeEventListener?.(hmSensor.event.LAST, update);
-      },
+	  unit_type: 2,
     });
   },
 
   buildWeather() {
-    const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
+    const textWidget = hmUI.createWidget(hmUI.widget.TEXT_FONT, {
       ...OUTER_TEXT_PROPS,
       start_angle: -120,
       end_angle: -60,
-    });
-
-    const weatherSensor = hmSensor.createSensor(hmSensor.id.WEATHER);
-
-    const update = () => {
-      const temp = weatherSensor.current;
-
-	const index = weatherSensor.curAirIconIndex;
-	const hasName = !isNaN(index) && index !== 25;
-      const text = hasName ? `${WEATHER_NAMES[index]} ${temp}\u00B0C` : `${temp}\u00B0C`;
-
-      textWidget.setProperty(hmUI.prop.TEXT, text);
-    };
-
-    hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
-      resume_call: () => {
-        if (hmSetting.getScreenType() == hmSetting.screen_type.WATCHFACE) {
-          update();
-        }
-      },
+      type: hmUI.data_type.WEATHER,
+	  unit_type: 2,
     });
   },
 
   buildSteps() {
-    const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
-      ...OUTER_TEXT_ROTATED_PROPS,
+    const textWidget = hmUI.createWidget(hmUI.widget.TEXT_FONT, {
+      ...OUTER_TEXT_PROPS,
       start_angle: -180,
       end_angle: -120,
-    });
-
-    const stepSensor = hmSensor.createSensor(hmSensor.id.STEP);
-
-    const update = () => {
-      const { current } = stepSensor;
-      const text = `STP ${formatStepCount(current)}`.toUpperCase().split('').reverse().join('');
-
-      textWidget.setProperty(hmUI.prop.TEXT, text);
-    };
-
-    hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
-      resume_call: () => {
-        if (hmSetting.getScreenType() == hmSetting.screen_type.WATCHFACE) {
-          stepSensor.addEventListener(hmSensor.event.CHANGE, update);
-          update();
-        }
-      },
-      pause_call: () => {
-        stepSensor.removeEventListener(hmSensor.event.CHANGE, update);
-      },
+      type: hmUI.data_type.STEP,
+	  unit_type: 2,
     });
   },
 
