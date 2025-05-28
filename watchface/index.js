@@ -55,7 +55,7 @@ WatchFace({
   	  //9: (start, end) => this.buildTextFontWidget(hmUI.data_type.RECOVERY_TIME, 2, start, end),
   	  //11: (start, end) => this.buildTextFontWidget(hmUI.data_type.STEP, 2, start, end),
 	const widgetBuilderMap = {
-  	  11: (start, end) => this.buildMonth(false, start, end),
+  	  11: (start, end) => this.buildWeek(false, start, end),
   	  1: (start, end) => this.buildDate(false, start, end),
   	  3: (start, end) => this.buildTextFontWidget(hmUI.data_type.FLOOR, 2, start, end),
   	  9: (start, end) => this.buildSteps(false, start, end),
@@ -70,7 +70,7 @@ WatchFace({
     });
   },
 
-  buildMonth(rotated, start_angle, end_angle) {
+  buildWeek(rotated, start_angle, end_angle) {
     const props = rotated ? OUTER_TEXT_ROTATED_PROPS : OUTER_TEXT_PROPS;
     const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
       ...props,
@@ -80,8 +80,8 @@ WatchFace({
 
     const timeSensor = hmSensor.createSensor(hmSensor.id.TIME);
     const update = () => {
-      const { month, year } = timeSensor;
-      let text = `${year} ${MONTHS[month - 1]}`;
+      const { week } = timeSensor;
+      let text = `${WEEKDAYS[week - 1]}`;
       if (rotated) text = text.split('').reverse().join('');
       textWidget.setProperty(hmUI.prop.TEXT, text);
     };
@@ -110,8 +110,11 @@ WatchFace({
 
     const timeSensor = hmSensor.createSensor(hmSensor.id.TIME);
     const update = () => {
-      const { day, week } = timeSensor;
-      let text = `${day} ${WEEKDAYS[week - 1]}`;
+      const { day, month, year } = timeSensor;
+      //let text = `${day} ${MONTHS[month - 1]} ${year}`;
+      //let text = `${day} ${MONTHS[month - 1]}`;
+	  const shortYear = year.toString().slice(-2);
+      let text = `${day} ${MONTHS[month - 1]} ${shortYear}`;
       if (rotated) text = text.split('').reverse().join('');
       textWidget.setProperty(hmUI.prop.TEXT, text);
     };

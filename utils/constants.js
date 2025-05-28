@@ -21,13 +21,13 @@ export const FONT = 'fonts/RobotoCondensed-Medium.ttf';
 export const FONT_ROTATED = 'fonts/RobotoCondensed-Medium_rotated.ttf';
 
 const WEEKDAYS_EN = [
-  'MON',
-  'TUE',
-  'WED',
-  'THU',
-  'FRI',
-  'SAT',
-  'SUN',
+  'MONDAY',
+  'TUESDAY',
+  'WEDNESDAY',
+  'THURSDAY',
+  'FRIDAY',
+  'SATURDAY',
+  'SUNDAY',
 ];
 const WEEKDAYS_RU = [
   'ПОНЕДЕЛЬНИК',
