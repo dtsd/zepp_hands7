@@ -9,8 +9,6 @@ import {
   OUTER_IMAGE_PROPS,
   OUTER_TEXT_PROPS,
   OUTER_TEXT_ROTATED_PROPS,
-  SLEEP_ARC_PROPS,
-  SUN_ARC_PROPS,
   HOUR_POINTER_PROPS,
   MINUTE_POINTER_PROPS,
   SECOND_POINTER_PROPS,
@@ -57,12 +55,12 @@ WatchFace({
   	  //9: (start, end) => this.buildTextFontWidget(hmUI.data_type.RECOVERY_TIME, 2, start, end),
   	  //11: (start, end) => this.buildTextFontWidget(hmUI.data_type.STEP, 2, start, end),
 	const widgetBuilderMap = {
-  	  11: (start, end) => this.buildSteps(false, start, end),
-  	  1: (start, end) => this.buildTextFontWidget(hmUI.data_type.FLOOR, 2, start, end),
-  	  3: (start, end) => this.buildTextFontWidget(hmUI.data_type.ALARM_CLOCK, 2, start, end),
-  	  9: (start, end) => this.buildWeather(false, start, end),
-  	  5: (start, end) => this.buildMonth(true, start, end),
-  	  7: (start, end) => this.buildDate(true, start, end),
+  	  11: (start, end) => this.buildMonth(false, start, end),
+  	  1: (start, end) => this.buildDate(false, start, end),
+  	  3: (start, end) => this.buildTextFontWidget(hmUI.data_type.FLOOR, 2, start, end),
+  	  9: (start, end) => this.buildSteps(false, start, end),
+  	  5: (start, end) => this.buildBattery(true, start, end),
+  	  7: (start, end) => this.buildWeather(true, start, end),
 	};
 
 
@@ -83,7 +81,7 @@ WatchFace({
     const timeSensor = hmSensor.createSensor(hmSensor.id.TIME);
     const update = () => {
       const { month, year } = timeSensor;
-      let text = `${MONTHS[month - 1]} ${year}`;
+      let text = `${year} ${MONTHS[month - 1]}`;
       if (rotated) text = text.split('').reverse().join('');
       textWidget.setProperty(hmUI.prop.TEXT, text);
     };
@@ -113,7 +111,7 @@ WatchFace({
     const timeSensor = hmSensor.createSensor(hmSensor.id.TIME);
     const update = () => {
       const { day, week } = timeSensor;
-      let text = `${WEEKDAYS[week - 1]} ${day}`;
+      let text = `${day} ${WEEKDAYS[week - 1]}`;
       if (rotated) text = text.split('').reverse().join('');
       textWidget.setProperty(hmUI.prop.TEXT, text);
     };
@@ -141,6 +139,36 @@ WatchFace({
     });
   },
 
+  buildBattery(rotated, start_angle, end_angle) {
+    const props = rotated ? OUTER_TEXT_ROTATED_PROPS : OUTER_TEXT_PROPS;
+    const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
+      ...props,
+      start_angle,
+      end_angle,
+    });
+
+    const batterySensor = hmSensor.createSensor(hmSensor.id.BATTERY);
+
+    const update = () => {
+      const { current } = batterySensor;
+      let text = `${current}% BATT`;
+      if (rotated) text = text.split('').reverse().join('');
+      textWidget.setProperty(hmUI.prop.TEXT, text);
+    };
+
+    hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
+      resume_call: () => {
+        if (hmSetting.getScreenType() == hmSetting.screen_type.WATCHFACE) {
+          batterySensor.addEventListener?.(hmSensor.event.CHANGE, update);
+          update();
+        }
+      },
+      pause_call: () => {
+        batterySensor.removeEventListener?.(hmSensor.event.CHANGE, update);
+      },
+    });
+  },
+
   buildWeather(rotated, start_angle, end_angle) {
     const props = rotated ? OUTER_TEXT_ROTATED_PROPS : OUTER_TEXT_PROPS;
     const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
@@ -156,7 +184,7 @@ WatchFace({
 
 	const index = weatherSensor.curAirIconIndex;
 	const hasName = !isNaN(index) && index !== 25;
-    let text = hasName ? `${WEATHER_NAMES[index]} ${temp}°` : `${temp}°`;
+    let text = hasName ? `${temp}° ${WEATHER_NAMES[index]}` : `${temp}°`;
     if (rotated) text = text.split('').reverse().join('');
 
       textWidget.setProperty(hmUI.prop.TEXT, text);
@@ -183,7 +211,7 @@ WatchFace({
 
     const update = () => {
       const { current } = stepSensor;
-      let text = `STP ${formatStepCount(current)}`;
+      let text = `${formatStepCount(current)} STEPS`;
       if (rotated) text = text.split('').reverse().join('');
       textWidget.setProperty(hmUI.prop.TEXT, text);
     };
