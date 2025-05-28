@@ -114,7 +114,7 @@ WatchFace({
       //let text = `${day} ${MONTHS[month - 1]} ${year}`;
       //let text = `${day} ${MONTHS[month - 1]}`;
 	  const shortYear = year.toString().slice(-2);
-      let text = `${day} ${MONTHS[month - 1]} ${shortYear}`;
+      let text = `${day} ${MONTHS[month - 1]} '${shortYear}`;
       if (rotated) text = text.split('').reverse().join('');
       textWidget.setProperty(hmUI.prop.TEXT, text);
     };
