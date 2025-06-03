@@ -154,7 +154,7 @@ WatchFace({
 
     const update = () => {
       const { current } = batterySensor;
-      let text = `${current}% BATT`;
+      let text = `PWR ${current}%`;
       if (rotated) text = text.split('').reverse().join('');
       textWidget.setProperty(hmUI.prop.TEXT, text);
     };
@@ -187,7 +187,7 @@ WatchFace({
 
 	const index = weatherSensor.curAirIconIndex;
 	const hasName = !isNaN(index) && index !== 25;
-    let text = hasName ? `${temp}° ${WEATHER_NAMES[index]}` : `${temp}°`;
+    let text = hasName ? `${WEATHER_NAMES[index]} ${temp}°` : `${temp}°`;
     if (rotated) text = text.split('').reverse().join('');
 
       textWidget.setProperty(hmUI.prop.TEXT, text);
@@ -214,7 +214,7 @@ WatchFace({
 
     const update = () => {
       const { current } = stepSensor;
-      let text = `${formatStepCount(current)} STEPS`;
+      let text = `STP ${formatStepCount(current)}`;
       if (rotated) text = text.split('').reverse().join('');
       textWidget.setProperty(hmUI.prop.TEXT, text);
     };

@@ -74,8 +74,8 @@ export const MINUTE_TEXT_PROPS = {
 };
 
 export const BASE_TEXT_PROPS = {
-  text_size: px(32),
-  color: 0xccc000,
+  text_size: px(34),
+  color: COLORS.widget,
   align_h: hmUI.align.CENTER_H,
   align_v: hmUI.align.TOP,
   char_space: px(1),

@@ -15,6 +15,7 @@ export const COLORS = {
   text: 0xffffff,
   time: 0xffdc37,
   sleep: 0xceb12a,
+  widget: 0xccc000,
 };
 
 export const FONT = 'fonts/RobotoCondensed-Medium.ttf';
