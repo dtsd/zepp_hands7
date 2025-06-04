@@ -55,7 +55,8 @@ WatchFace({
   	  11: (start, end) => this.buildWeather(false, start, end),
   	  1:  (start, end) => this.buildDate(false, start, end),
   	  //3:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.TRAINING_LOAD, 'TRN', 4, start, end),
-  	  3:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.ALARM_CLOCK, 'ALM', 4, start, end),
+  	  //3:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.ALARM_CLOCK, 'ALM', 4, start, end),
+  	  3:  (start, end) => this.buildSteps(false, start, end),
   	  9:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.FLOOR, 'FLR', 3, start, end),
   	  5:  (start, end) => this.buildBattery(true, start, end),
   	  7:  (start, end) => this.buildSteps(true, start, end),
@@ -113,7 +114,7 @@ WatchFace({
 
   buildLabelledTextFontWidget(type, label, dataChars, start_angle, end_angle) {
 
-	const totalTextChars = 10; //font RobotoCondensed, 34
+	const totalTextChars = 9; //font RobotoCondensed, 34
 
 	const angleRange = end_angle - start_angle;
 	const charAngle = angleRange / totalTextChars;
