@@ -6,7 +6,7 @@
     "appType": "watchface",
     "version": {
       "code": 3,
-      "name": "1.0.20"
+      "name": "1.0.21"
     },
     "icon": "icon.png",
     "vender": "dtsd",

@@ -1,12 +1,7 @@
 import { SCREEN, MONTHS, STEPS_TEXT, WEEKDAYS, WEATHER_NAMES } from '../utils/constants';
 import { formatStepCount } from '../utils/formatStepCount';
-import { decline } from '../utils/decline';
 import {
   BACKGROUND_IMAGE_PROPS,
-  HOUR_TEXT_PROPS,
-  INNER_IMAGE_PROPS,
-  MINUTE_TEXT_PROPS,
-  OUTER_IMAGE_PROPS,
   OUTER_TEXT_PROPS,
   OUTER_TEXT_ROTATED_PROPS,
   HOUR_POINTER_PROPS,
@@ -54,48 +49,21 @@ WatchFace({
   	  //3: (start, end) => this.buildTextFontWidget(hmUI.data_type.TRAINING_LOAD, 2, start, end),
   	  //9: (start, end) => this.buildTextFontWidget(hmUI.data_type.RECOVERY_TIME, 2, start, end),
   	  //11: (start, end) => this.buildTextFontWidget(hmUI.data_type.STEP, 2, start, end),
+  	  // 3: (start, end) => this.buildTextFontWidget(hmUI.data_type.FLOOR, 2, start, end),
+	  // up to 4 digits? 5 decimal places
 	const widgetBuilderMap = {
-  	  11: (start, end) => this.buildWeek(false, start, end),
-  	  1: (start, end) => this.buildDate(false, start, end),
-  	  3: (start, end) => this.buildTextFontWidget(hmUI.data_type.FLOOR, 2, start, end),
-  	  9: (start, end) => this.buildSteps(false, start, end),
-  	  5: (start, end) => this.buildBattery(true, start, end),
-  	  7: (start, end) => this.buildWeather(true, start, end),
+  	  11: (start, end) => this.buildWeather(false, start, end),
+  	  1:  (start, end) => this.buildDate(false, start, end),
+  	  //3:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.TRAINING_LOAD, 'TRN', 4, start, end),
+  	  3:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.ALARM_CLOCK, 'ALM', 4, start, end),
+  	  9:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.FLOOR, 'FLR', 3, start, end),
+  	  5:  (start, end) => this.buildBattery(true, start, end),
+  	  7:  (start, end) => this.buildSteps(true, start, end),
 	};
-
 
     widgetAngleMap.forEach(({ id, start_angle, end_angle }) => {
       const builder = widgetBuilderMap[id];
       builder(start_angle, end_angle);
-    });
-  },
-
-  buildWeek(rotated, start_angle, end_angle) {
-    const props = rotated ? OUTER_TEXT_ROTATED_PROPS : OUTER_TEXT_PROPS;
-    const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
-      ...props,
-      start_angle,
-      end_angle,
-    });
-
-    const timeSensor = hmSensor.createSensor(hmSensor.id.TIME);
-    const update = () => {
-      const { week } = timeSensor;
-      let text = `${WEEKDAYS[week - 1]}`;
-      if (rotated) text = text.split('').reverse().join('');
-      textWidget.setProperty(hmUI.prop.TEXT, text);
-    };
-
-    hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
-      resume_call: () => {
-        if (hmSetting.getScreenType() === hmSetting.screen_type.WATCHFACE) {
-          timeSensor.addEventListener?.(hmSensor.event.MINUTEEND, update);
-          update();
-        }
-      },
-      pause_call: () => {
-        timeSensor.removeEventListener?.(hmSensor.event.MINUTEEND, update);
-      },
     });
   },
 
@@ -110,11 +78,12 @@ WatchFace({
 
     const timeSensor = hmSensor.createSensor(hmSensor.id.TIME);
     const update = () => {
-      const { day, month, year } = timeSensor;
+      const { day, month, year, week } = timeSensor;
       //let text = `${day} ${MONTHS[month - 1]} ${year}`;
       //let text = `${day} ${MONTHS[month - 1]}`;
-	  const shortYear = year.toString().slice(-2);
-      let text = `${day} ${MONTHS[month - 1]} '${shortYear}`;
+      // let text = `${WEEKDAYS[week - 1]}`;
+	  //const shortYear = year.toString().slice(-2);
+      let text = `${WEEKDAYS[week - 1]} ${day} ${MONTHS[month - 1]}`;
       if (rotated) text = text.split('').reverse().join('');
       textWidget.setProperty(hmUI.prop.TEXT, text);
     };
@@ -139,6 +108,37 @@ WatchFace({
       end_angle,
       type,
       unit_type,
+    });
+  },
+
+  buildLabelledTextFontWidget(type, label, dataChars, start_angle, end_angle) {
+
+	const totalTextChars = 10; //font RobotoCondensed, 34
+
+	const angleRange = end_angle - start_angle;
+	const charAngle = angleRange / totalTextChars;
+
+	const labelWithSpace = `${label} `;
+	const labelChars = labelWithSpace.length; //space
+	
+	const labelWidgetShiftAngle = (labelChars - dataChars) * charAngle * 0.5;
+	const labelEndAngle = start_angle + angleRange * 0.5 + labelWidgetShiftAngle;
+
+    hmUI.createWidget(hmUI.widget.TEXT, {
+      ...OUTER_TEXT_PROPS,
+      start_angle,
+      end_angle: labelEndAngle,
+  	  align_h: hmUI.align.RIGHT,
+		text: labelWithSpace,
+    });
+
+    hmUI.createWidget(hmUI.widget.TEXT_FONT, {
+      ...OUTER_TEXT_PROPS,
+      start_angle: labelEndAngle,
+      end_angle,
+  	  align_h: hmUI.align.LEFT,
+      type,
+	padding: true,
     });
   },
 
@@ -231,4 +231,5 @@ WatchFace({
       },
     });
   },
+
 });
