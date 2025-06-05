@@ -1,5 +1,7 @@
 import { SCREEN, MONTHS, STEPS_TEXT, WEEKDAYS, WEATHER_NAMES } from '../utils/constants';
 import { formatStepCount } from '../utils/formatStepCount';
+import { formatMinutes } from '../utils/formatMinutes';
+import { getClosestSunriseSunsetTime } from '../utils/getClosestSunriseSunsetTime';
 import {
   BACKGROUND_IMAGE_PROPS,
   OUTER_TEXT_PROPS,
@@ -51,15 +53,16 @@ WatchFace({
   	  //11: (start, end) => this.buildTextFontWidget(hmUI.data_type.STEP, 2, start, end),
   	  // 3: (start, end) => this.buildTextFontWidget(hmUI.data_type.FLOOR, 2, start, end),
 	  // up to 4 digits? 5 decimal places
+  	  //3:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.TRAINING_LOAD, 'TRN', 4, start, end),
+  	  //3:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.ALARM_CLOCK, 'ALM', 4, start, end),
+  	  // 9:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.FLOOR, 'FLR', 3, start, end),
 	const widgetBuilderMap = {
   	  11: (start, end) => this.buildWeather(false, start, end),
   	  1:  (start, end) => this.buildDate(false, start, end),
-  	  //3:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.TRAINING_LOAD, 'TRN', 4, start, end),
-  	  //3:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.ALARM_CLOCK, 'ALM', 4, start, end),
   	  3:  (start, end) => this.buildSteps(false, start, end),
-  	  9:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.FLOOR, 'FLR', 3, start, end),
+  	  9:  (start, end) => this.buildSunriseSunset(false, start, end),
   	  5:  (start, end) => this.buildBattery(true, start, end),
-  	  7:  (start, end) => this.buildSteps(true, start, end),
+  	  7:  (start, end) => this.buildHeartRate(true, start, end),
 	};
 
     widgetAngleMap.forEach(({ id, start_angle, end_angle }) => {
@@ -229,6 +232,70 @@ WatchFace({
       },
       pause_call: () => {
         stepSensor.removeEventListener(hmSensor.event.CHANGE, update);
+      },
+    });
+  },
+
+  buildHeartRate(rotated, start_angle, end_angle) {
+    const props = rotated ? OUTER_TEXT_ROTATED_PROPS : OUTER_TEXT_PROPS;
+    const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
+      ...props,
+      start_angle,
+      end_angle,
+    });
+
+    const heartSensor = hmSensor.createSensor(hmSensor.id.HEART);
+
+    const update = () => {
+      const { last, today } = heartSensor;
+      let max = today.length ? Math.max(...today) : last;
+      let text = `HR ${last}/${max}`;
+      if (rotated) text = text.split('').reverse().join('');
+      textWidget.setProperty(hmUI.prop.TEXT, text);
+    };
+
+    hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
+      resume_call: () => {
+        if (hmSetting.getScreenType() == hmSetting.screen_type.WATCHFACE) {
+          heartSensor.addEventListener?.(hmSensor.event.LAST, update);
+          update();
+        }
+      },
+      pause_call: () => {
+        heartSensor.removeEventListener?.(hmSensor.event.LAST, update);
+      },
+    });
+  },
+
+  buildSunriseSunset(rotated, start_angle, end_angle) {
+    const props = rotated ? OUTER_TEXT_ROTATED_PROPS : OUTER_TEXT_PROPS;
+    const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
+      ...props,
+      start_angle,
+      end_angle,
+    });
+
+    const timeSensor = hmSensor.createSensor(hmSensor.id.TIME);
+    const weatherSensor = hmSensor.createSensor(hmSensor.id.WEATHER);
+
+    const update = () => {
+      const sunObj = getClosestSunriseSunsetTime(timeSensor, weatherSensor);
+      let text = 'IN SPACE';
+	  if (sunObj)
+	  	{
+        	const { isDay, tillMins } = sunObj;
+		    const label = isDay ? 'SS' : 'SR';
+			text = `${label} ${formatMinutes(tillMins)}`;
+		}
+      if (rotated) text = text.split('').reverse().join('');
+      textWidget.setProperty(hmUI.prop.TEXT, text);
+    };
+
+    hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
+      resume_call: () => {
+        if (hmSetting.getScreenType() == hmSetting.screen_type.WATCHFACE) {
+          update();
+        }
       },
     });
   },
