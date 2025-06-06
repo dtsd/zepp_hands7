@@ -56,13 +56,14 @@ WatchFace({
   	  //3:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.TRAINING_LOAD, 'TRN', 4, start, end),
   	  //3:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.ALARM_CLOCK, 'ALM', 4, start, end),
   	  // 9:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.FLOOR, 'FLR', 3, start, end),
+  	  //3:  (start, end) => this.buildHeartRate(true, start, end),
 	const widgetBuilderMap = {
   	  11: (start, end) => this.buildWeather(false, start, end),
   	  1:  (start, end) => this.buildDate(false, start, end),
-  	  3:  (start, end) => this.buildSteps(false, start, end),
-  	  9:  (start, end) => this.buildSunriseSunset(false, start, end),
+  	  3: (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.MONTH_RUN_DISTANCE, 'MR', 5, start, end, true),
+  	  9: (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.FLOOR, 'FLR', 2, start, end, false),
   	  5:  (start, end) => this.buildBattery(true, start, end),
-  	  7:  (start, end) => this.buildHeartRate(true, start, end),
+  	  7:  (start, end) => this.buildSteps(true, start, end),
 	};
 
     widgetAngleMap.forEach(({ id, start_angle, end_angle }) => {
@@ -115,18 +116,19 @@ WatchFace({
     });
   },
 
-  buildLabelledTextFontWidget(type, label, dataChars, start_angle, end_angle) {
+  buildLabelledTextFontWidget(type, label, dataChars, start_angle, end_angle, padding) {
 
-	const totalTextChars = 9; //font RobotoCondensed, 34
+	const totalTextChars = 10; //font NotoSansMonoCondensed, 32
 
 	const angleRange = end_angle - start_angle;
 	const charAngle = angleRange / totalTextChars;
+	const axisAngle = start_angle + angleRange * 0.5;
 
 	const labelWithSpace = `${label} `;
 	const labelChars = labelWithSpace.length; //space
-	
-	const labelWidgetShiftAngle = (labelChars - dataChars) * charAngle * 0.5;
-	const labelEndAngle = start_angle + angleRange * 0.5 + labelWidgetShiftAngle;
+
+	const axisShiftAngle = (labelChars - dataChars) * charAngle * 0.5;
+	const labelEndAngle = axisAngle + axisShiftAngle;
 
     hmUI.createWidget(hmUI.widget.TEXT, {
       ...OUTER_TEXT_PROPS,
@@ -142,7 +144,7 @@ WatchFace({
       end_angle,
   	  align_h: hmUI.align.LEFT,
       type,
-	padding: true,
+	  padding,
     });
   },
 
