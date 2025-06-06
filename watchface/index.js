@@ -1,7 +1,7 @@
 import { SCREEN, MONTHS, STEPS_TEXT, WEEKDAYS, WEATHER_NAMES } from '../utils/constants';
 import { formatStepCount } from '../utils/formatStepCount';
 import { formatMinutes } from '../utils/formatMinutes';
-import { getClosestSunriseSunsetTime } from '../utils/getClosestSunriseSunsetTime';
+import { getNextSunEvent } from '../utils/getNextSunEvent';
 import {
   BACKGROUND_IMAGE_PROPS,
   OUTER_TEXT_PROPS,
@@ -279,13 +279,13 @@ WatchFace({
     const weatherSensor = hmSensor.createSensor(hmSensor.id.WEATHER);
 
     const update = () => {
-      const sunObj = getClosestSunriseSunsetTime(timeSensor, weatherSensor);
+      const sunEvent = getNextSunEvent(timeSensor, weatherSensor);
       let text = 'IN SPACE';
-	  if (sunObj)
+	  if (sunEvent)
 	  	{
-        	const { isDay, tillMins } = sunObj;
-		    const label = isDay ? 'SS' : 'SR';
-			text = `${label} ${formatMinutes(tillMins)}`;
+        	const { type, minutes } = sunEvent;
+		    const label = (type == 'sunrise') ? 'NGHT' : 'DAY';
+			text = `${label} ${formatMinutes(minutes)}`;
 		}
       if (rotated) text = text.split('').reverse().join('');
       textWidget.setProperty(hmUI.prop.TEXT, text);

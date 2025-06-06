@@ -8,7 +8,7 @@ export const BACKGROUND_IMAGE_PROPS = {
 };
 
 export const BASE_TEXT_PROPS = {
-  text_size: px(30),
+  text_size: px(32),
   color: COLORS.widget,
   align_h: hmUI.align.CENTER_H,
   align_v: hmUI.align.TOP,
