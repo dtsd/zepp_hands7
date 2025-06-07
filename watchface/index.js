@@ -60,8 +60,8 @@ WatchFace({
 	const widgetBuilderMap = {
   	  11: (start, end) => this.buildWeather(false, start, end),
   	  1:  (start, end) => this.buildDate(false, start, end),
-  	  3: (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.MONTH_RUN_DISTANCE, 'MRD', 5, start, end, true),
-  	  9: (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.FLOOR, 'FLR', 2, start, end, false),
+  	  3: (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.MONTH_RUN_DISTANCE, 'MR', 5, start, end, true),
+  	  9: (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.FLOOR, 'STRS', 2, start, end, false),
   	  5:  (start, end) => this.buildBattery(true, start, end),
   	  7:  (start, end) => this.buildSteps(true, start, end),
 	};

@@ -21,9 +21,11 @@ export const COLORS = {
 /*
 export const FONT = 'fonts/NotoSansMono-Condensed.ttf';
 export const FONT_ROTATED = 'fonts/NotoSansMono-Condensed_rotated.ttf';
-*/
 export const FONT = 'fonts/Zepp-OS-Number-Condensed.ttf';
 export const FONT_ROTATED = 'fonts/Zepp-OS-Number-Condensed_rotated.ttf';
+*/
+export const FONT = 'fonts/RobotoCondensed-Medium.ttf';
+export const FONT_ROTATED = 'fonts/RobotoCondensed-Medium_rotated.ttf';
 
 const WEEKDAYS_EN = [
   'MON',
