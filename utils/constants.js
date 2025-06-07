@@ -18,30 +18,30 @@ export const COLORS = {
   widget: 0xccc000,
 };
 
-//export const FONT = 'fonts/RobotoCondensed-Medium.ttf';
-//export const FONT_ROTATED = 'fonts/RobotoCondensed-Medium_rotated.ttf';
-//export const FONT = 'fonts/NotoSansMono[wght].ttf';
-//export const FONT_ROTATED = 'fonts/NotoSansMono[wght]_rotated.ttf';
+/*
 export const FONT = 'fonts/NotoSansMono-Condensed.ttf';
 export const FONT_ROTATED = 'fonts/NotoSansMono-Condensed_rotated.ttf';
+*/
+export const FONT = 'fonts/Zepp-OS-Number-Condensed.ttf';
+export const FONT_ROTATED = 'fonts/Zepp-OS-Number-Condensed_rotated.ttf';
 
 const WEEKDAYS_EN = [
-  'MO',
-  'TU',
-  'WE',
-  'TH',
-  'FR',
-  'SA',
-  'SU',
+  'MON',
+  'TUE',
+  'WED',
+  'THU',
+  'FRI',
+  'SAT',
+  'SUN',
 ];
 const WEEKDAYS_RU = [
-  'ПОНЕДЕЛЬНИК',
-  'ВТОРНИК',
-  'СРЕДА',
-  'ЧЕТВЕРГ',
-  'ПЯТНИЦА',
-  'СУББОТА',
-  'ВОСКРЕСЕНЬЕ',
+  'ПНД',
+  'ВТР',
+  'СРД',
+  'ЧТВ',
+  'ПТН',
+  'СУБ',
+  'ВСК',
 ];
 export const WEEKDAYS = isRusLang ? WEEKDAYS_RU : WEEKDAYS_EN;
 
