@@ -108,7 +108,7 @@ export const WEATHER_NAMES = [
   'SAND',   // SAND_BLOWING.PNG ("SAND BLOWING" → "SAND BL")
   'T-SAND',    // STRONG_SANDSTORM.PNG ("STRONG SANDSTORM" → "SANDST")
   'T-RAIN',    // RAINSTORM.PNG ("RAINSTORM" → "RAINST")
-  'UNKNWN',   // UNKNOWN WEATHER.PNG (no change)
+  'RAIN',   // UNKNOWN WEATHER.PNG (no change)
   'CLOUDY',    // CLOUDY_AT_NIGHT.PNG (no change)
   'SHOWER',    // SHOWER_AT_NIGHT.PNG (no change)
   'CLEAR',     // CLEAR_NIGHT.PNG (no change)

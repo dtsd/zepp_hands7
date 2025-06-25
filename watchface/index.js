@@ -61,7 +61,7 @@ WatchFace({
   	  11: (start, end) => this.buildWeather(false, start, end),
   	  1:  (start, end) => this.buildDate(false, start, end),
   	  3: (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.MONTH_RUN_DISTANCE, 'MR', 5, start, end, true),
-  	  9: (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.FLOOR, 'STRS', 2, start, end, false),
+  	  9: (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.FLOOR, 'FLOOR', 2, start, end, false),
   	  5:  (start, end) => this.buildBattery(true, start, end),
   	  7:  (start, end) => this.buildSteps(true, start, end),
 	};
@@ -192,8 +192,9 @@ WatchFace({
       const temp = weatherSensor.current;
 
 	const index = weatherSensor.curAirIconIndex;
-	const hasName = !isNaN(index) && index !== 25;
-    let text = hasName ? `${WEATHER_NAMES[index]} ${temp}°` : `${temp}°`;
+	const weatherName = (index >= 0 &&  index < WEATHER_NAMES.length)
+		? WEATHER_NAMES[index] : `[ID ${index}]`;
+	let text = `${weatherName} ${temp}�`;
     if (rotated) text = text.split('').reverse().join('');
 
       textWidget.setProperty(hmUI.prop.TEXT, text);
