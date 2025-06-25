@@ -194,7 +194,7 @@ WatchFace({
 	const index = weatherSensor.curAirIconIndex;
 	const weatherName = (index >= 0 &&  index < WEATHER_NAMES.length)
 		? WEATHER_NAMES[index] : `[ID ${index}]`;
-	let text = `${weatherName} ${temp}°`;
+	let text = `${weatherName} ${temp}\u00B0`;
     if (rotated) text = text.split('').reverse().join('');
 
       textWidget.setProperty(hmUI.prop.TEXT, text);
