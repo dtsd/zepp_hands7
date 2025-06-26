@@ -51,19 +51,19 @@ WatchFace({
   	  //3: (start, end) => this.buildTextFontWidget(hmUI.data_type.TRAINING_LOAD, 2, start, end),
   	  //9: (start, end) => this.buildTextFontWidget(hmUI.data_type.RECOVERY_TIME, 2, start, end),
   	  //11: (start, end) => this.buildTextFontWidget(hmUI.data_type.STEP, 2, start, end),
-  	  // 3: (start, end) => this.buildTextFontWidget(hmUI.data_type.FLOOR, 2, start, end),
 	  // up to 4 digits? 5 decimal places
   	  //3:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.TRAINING_LOAD, 'TRN', 4, start, end),
   	  //3:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.ALARM_CLOCK, 'ALM', 4, start, end),
   	  // 9:  (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.FLOOR, 'FLR', 3, start, end),
-  	  //3:  (start, end) => this.buildHeartRate(true, start, end),
+  	  //3: (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.MONTH_RUN_DISTANCE, 'MR', 5, start, end, true),
+  	  //9: (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.FLOOR, 'FLOOR', 2, start, end, false),
 	const widgetBuilderMap = {
-  	  11: (start, end) => this.buildWeather(false, start, end),
-  	  1:  (start, end) => this.buildDate(false, start, end),
-  	  3: (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.MONTH_RUN_DISTANCE, 'MR', 5, start, end, true),
-  	  9: (start, end) => this.buildLabelledTextFontWidget(hmUI.data_type.FLOOR, 'FLOOR', 2, start, end, false),
-  	  5:  (start, end) => this.buildBattery(true, start, end),
-  	  7:  (start, end) => this.buildSteps(true, start, end),
+  	  11: (start, end) => this.buildDate(false, start, end),
+  	  1: (start, end) => this.buildWeekday(false, start, end),
+  	  9: (start, end) => this.buildWeather(false, start, end),
+  	  3: (start, end) => this.buildBattery(false, start, end),
+  	  5: (start, end) => this.buildHeartRate(true, start, end),
+  	  7: (start, end) => this.buildSteps(true, start, end),
 	};
 
     widgetAngleMap.forEach(({ id, start_angle, end_angle }) => {
@@ -88,7 +88,40 @@ WatchFace({
       //let text = `${day} ${MONTHS[month - 1]}`;
       // let text = `${WEEKDAYS[week - 1]}`;
 	  //const shortYear = year.toString().slice(-2);
-      let text = `${WEEKDAYS[week - 1]} ${day} ${MONTHS[month - 1]}`;
+      let text = `${MONTHS[month - 1]} ${day}`;
+      if (rotated) text = text.split('').reverse().join('');
+      textWidget.setProperty(hmUI.prop.TEXT, text);
+    };
+
+    hmUI.createWidget(hmUI.widget.WIDGET_DELEGATE, {
+      resume_call: () => {
+        if (hmSetting.getScreenType() === hmSetting.screen_type.WATCHFACE) {
+          timeSensor.addEventListener?.(hmSensor.event.MINUTEEND, update);
+          update();
+        }
+      },
+      pause_call: () => {
+        timeSensor.removeEventListener?.(hmSensor.event.MINUTEEND, update);
+      },
+    });
+  },
+
+  buildWeekday(rotated, start_angle, end_angle) {
+    const props = rotated ? OUTER_TEXT_ROTATED_PROPS : OUTER_TEXT_PROPS;
+    const textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
+      ...props,
+      show_level: hmUI.show_level.ONLY_NORMAL,
+      start_angle,
+      end_angle,
+    });
+
+    const timeSensor = hmSensor.createSensor(hmSensor.id.TIME);
+    const update = () => {
+      const { day, month, year, week } = timeSensor;
+      //let text = `${day} ${MONTHS[month - 1]} ${year}`;
+      //let text = `${day} ${MONTHS[month - 1]}`;
+	  //const shortYear = year.toString().slice(-2);
+      let text = `${WEEKDAYS[week - 1]}`;
       if (rotated) text = text.split('').reverse().join('');
       textWidget.setProperty(hmUI.prop.TEXT, text);
     };
