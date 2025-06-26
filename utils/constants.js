@@ -28,13 +28,13 @@ export const FONT = 'fonts/RobotoCondensed-Medium.ttf';
 export const FONT_ROTATED = 'fonts/RobotoCondensed-Medium_rotated.ttf';
 
 const WEEKDAYS_EN = [
-  'MON',
-  'TUE',
-  'WED',
-  'THU',
-  'FRI',
-  'SAT',
-  'SUN',
+  'MO',
+  'TU',
+  'WE',
+  'TH',
+  'FR',
+  'SA',
+  'SU',
 ];
 const WEEKDAYS_RU = [
   'ПНД',
