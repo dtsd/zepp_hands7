@@ -1,4 +1,4 @@
-import { SCREEN, MONTHS, STEPS_TEXT, WEEKDAYS, WEATHER_NAMES } from '../utils/constants';
+import { SCREEN, MONTHS, WEEKDAYS, WEATHER_NAMES, LABELS, SUNSTATES, TIME_LABELS } from '../utils/constants';
 import { formatStepCount } from '../utils/formatStepCount';
 import { formatMinutes } from '../utils/formatMinutes';
 import { getNextSunEvent } from '../utils/getNextSunEvent';
@@ -194,7 +194,7 @@ WatchFace({
 
     const update = () => {
       const { current } = batterySensor;
-      let text = `PWR ${current}%`;
+      let text = LABELS[0] + ` ${current}%`;
       if (rotated) text = text.split('').reverse().join('');
       textWidget.setProperty(hmUI.prop.TEXT, text);
     };
@@ -255,7 +255,7 @@ WatchFace({
 
     const update = () => {
       const { current } = stepSensor;
-      let text = `STP ${formatStepCount(current)}`;
+      let text = LABELS[1] + ` ${formatStepCount(current)}`;
       if (rotated) text = text.split('').reverse().join('');
       textWidget.setProperty(hmUI.prop.TEXT, text);
     };
@@ -286,7 +286,7 @@ WatchFace({
     const update = () => {
       const { last, today } = heartSensor;
       let max = today.length ? Math.max(...today) : last;
-      let text = `HR ${last}/${max}`;
+      let text = LABELS[2] + ` ${last}/${max}`;
       if (rotated) text = text.split('').reverse().join('');
       textWidget.setProperty(hmUI.prop.TEXT, text);
     };
@@ -317,12 +317,13 @@ WatchFace({
 
     const update = () => {
       const sunEvent = getNextSunEvent(timeSensor, weatherSensor);
-      let text = 'IN SPACE';
+      let text = SUNSTATES[0];
 	  if (sunEvent)
 	  	{
         	const { type, minutes } = sunEvent;
-		    const label = (type == 'sunrise') ? 'NGHT' : 'DAY';
-			text = `${label} ${formatMinutes(minutes)}`;
+		    const label = (type == 'sunrise') ? SUNSTATES[1] : SUNSTATES[2];
+			const value = formatMinutes(minutes, TIME_LABELS);
+			text = `${label} ${value}`;
 		}
       if (rotated) text = text.split('').reverse().join('');
       textWidget.setProperty(hmUI.prop.TEXT, text);
@@ -336,5 +337,5 @@ WatchFace({
       },
     });
   },
-
 });
+
