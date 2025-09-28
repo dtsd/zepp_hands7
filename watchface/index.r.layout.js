@@ -70,3 +70,4 @@ export const SECOND_POINTER_PROPS = {
 
   show_level: hmUI.show_level.ONLY_NORMAL,
 };
+
