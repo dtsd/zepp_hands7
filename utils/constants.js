@@ -1,8 +1,5 @@
 const { width, height } = hmSetting.getDeviceInfo();
 
-const lang = DeviceRuntimeCore.HmUtils.getLanguage();
-const isRusLang = ['ru-RU', 'uk-UA'].includes(lang);
-
 export const SCREEN = {
   width,
   height,
@@ -15,95 +12,159 @@ export const COLORS = {
   text: 0xffffff,
   time: 0xffdc37,
   sleep: 0xceb12a,
+  widget: 0xccc000,
 };
 
+/*
+export const FONT = 'fonts/NotoSansMono-Condensed.ttf';
+export const FONT_ROTATED = 'fonts/NotoSansMono-Condensed_rotated.ttf';
+export const FONT = 'fonts/Zepp-OS-Number-Condensed.ttf';
+export const FONT_ROTATED = 'fonts/Zepp-OS-Number-Condensed_rotated.ttf';
+*/
 export const FONT = 'fonts/RobotoCondensed-Medium.ttf';
 export const FONT_ROTATED = 'fonts/RobotoCondensed-Medium_rotated.ttf';
 
-const WEEKDAYS_EN = [
-  'MON',
-  'TUE',
-  'WED',
-  'THU',
-  'FRI',
-  'SAT',
-  'SUN',
-];
-const WEEKDAYS_RU = [
-  'ПОНЕДЕЛЬНИК',
-  'ВТОРНИК',
-  'СРЕДА',
-  'ЧЕТВЕРГ',
-  'ПЯТНИЦА',
-  'СУББОТА',
-  'ВОСКРЕСЕНЬЕ',
-];
-export const WEEKDAYS = isRusLang ? WEEKDAYS_RU : WEEKDAYS_EN;
+const lang = DeviceRuntimeCore.HmUtils.getLanguage();
 
-const MONTHS_EN = [
-  'JAN',
-  'FEB',
-  'MAR',
-  'APR',
-  'MAY',
-  'JUN',
-  'JUL',
-  'AUG',
-  'SEP',
-  'OCT',
-  'NOV',
-  'DEC',
-];
-const MONTHS_RU = [
-  'ЯНВАРЬ',
-  'ФЕВРАЛЬ',
-  'МАРТ',
-  'АПРЕЛЬ',
-  'МАЙ',
-  'ИЮНЬ',
-  'ИЮЛЬ',
-  'АВГУСТ',
-  'СЕНТЯБРЬ',
-  'ОКТЯБРЬ',
-  'НОЯБРЬ',
-  'ДЕКАБРЬ',
+const isRusLang = ['ru-RU', 'uk-UA'].includes(lang);
+const isCnLang  = ['zh-CN', 'zh-Hans', 'zh-Hant'].includes(lang);
+const isDeLang  = ['de-DE'].includes(lang);
+const isEsLang  = ['es-ES', 'es-MX', 'es-419'].includes(lang);
+
+// --- Weekdays ---
+const WEEKDAYS_EN = ['MO','TU','WE','TH','FR','SA','SU'];
+const WEEKDAYS_RU = ['ПН','ВТ','СР','ЧТ','ПТ','СУ','ВС'];
+const WEEKDAYS_CN = ['一','二','三','四','五','六','日'];
+const WEEKDAYS_DE = ['MO','DI','MI','DO','FR','SA','SO'];
+const WEEKDAYS_ES = ['LU','MA','MI','JU','VI','SA','DO'];
+
+
+// --- Months ---
+const MONTHS_EN = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+const MONTHS_RU = ['ЯНВ','ФЕВ','МАР','АПР','МАЙ','ИЮН','ИЮЛ','АВГ','СЕН','ОКТ','НОЯ','ДЕК'];
+const MONTHS_CN = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+const MONTHS_DE = ['JAN','FEB','MÄR','APR','MAI','JUN','JUL','AUG','SEP','OKT','NOV','DEZ'];
+const MONTHS_ES = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+
+
+// --- Weather ---
+const WEATHER_EN = ['CLOUDY','SHOWER','SNOW','SUNNY','OVRCST',
+  'L-RAIN','L-SNOW','RAIN','SNOW','H-SNOW',
+  'H-RAIN','SAND','SLEET','FOG','HAZE',
+  'T-SHWR','T-SNOW','DUST','X-RAIN','HAIL',
+  'T-HAIL','X-RAIN','SAND','T-SAND','T-RAIN',
+  'RAIN','CLOUDY','SHOWER','CLEAR'
 ];
 
-export const MONTHS = isRusLang ? MONTHS_RU : MONTHS_EN;
-
-const STEPS_TEXT_RU = ['шаг', 'шага', 'шагов', 'шагов'];
-const STEPS_TEXT_EN = ['step', 'steps'];
-export const STEPS_TEXT = isRusLang ? STEPS_TEXT_RU : STEPS_TEXT_EN;
-
-export const WEATHER_NAMES = [
-  'CLOUDY',    // CLOUDY.PNG (no change)
-  'SHOWER',    // SHOWER.PNG (no change)
-  'SNOW',      // SNOW_SHOWER.PNG (no change)
-  'SUNNY',     // SUNNY.PNG (changed from "SUN" for clarity)
-  'OVRCST',    // OVERCAST.PNG ("OVERCAST" → "OVRCST")
-  'L-RAIN',   // LIGHT_RAIN.PNG ("LT RAIN" → "LT RAIN" for consistency)
-  'L-SNOW',   // LIGHT_SNOW.PNG (no change)
-  'RAIN',      // MODERATE_RAIN.PNG (no change)
-  'SNOW',      // MODERATE_SNOW.PNG (no change)
-  'H-SNOW',   // HEAVY_SNOW.PNG ("HVY" → "HV" to save space)
-  'H-RAIN',   // HEAVY_RAIN.PNG (ditto)
-  'SAND',      // SANDSTORM.PNG ("SANDSTORM" → "SAND")
-  'SLEET',     // SLEET.PNG (no change)
-  'FOG',       // FOG.PNG (no change)
-  'HAZE',      // HAZE.PNG (no change)
-  'T-SHWR',   // THUNDERSHOWER.PNG ("THUNDERSHOWER" → "T-STORM")
-  'T-SNOW',    // SNOWSTORM.PNG ("SNOWSTORM" → "SNOWST")
-  'DUST',      // DUST.PNG (no change)
-  'X-RAIN',    // EXTRAORDINARY_RAINSTORM.PNG ("XTRA RAINSTORM" → "X-RAIN")
-  'HAIL',   // RAIN_WITH_HAIL.PNG ("RAIN HAIL" → "RN HAIL")
-  'T-HAIL',    // THUNDERSHOWERS_WITH_HAIL.PNG ("THUNDER HAIL" → "T-HAIL")
-  'X-RAIN',   // HEAVY_RAINSTORM.PNG (matches "HV RAIN" style)
-  'SAND',   // SAND_BLOWING.PNG ("SAND BLOWING" → "SAND BL")
-  'T-SAND',    // STRONG_SANDSTORM.PNG ("STRONG SANDSTORM" → "SANDST")
-  'T-RAIN',    // RAINSTORM.PNG ("RAINSTORM" → "RAINST")
-  'UNKNWN',   // UNKNOWN WEATHER.PNG (no change)
-  'CLOUDY',    // CLOUDY_AT_NIGHT.PNG (no change)
-  'SHOWER',    // SHOWER_AT_NIGHT.PNG (no change)
-  'CLEAR',     // CLEAR_NIGHT.PNG (no change)
+const WEATHER_RU = ['ОБЛН','ЛИВН','СНЕГ','СОЛН','ПАСМ',
+  'М-ДОЖ','М-СНЕ','ДОЖД','СНЕГ','С-СНЕ',
+  'С-ДОЖ','ПЕСОК','СЛЕТ','ТУМА','ДЫМКА',
+  'Г-ГРМ','МЕТЕ','ПЫЛЬ','ЛИВН+','ГРАД',
+  'ГРМ+Г','ЛИВН+','ПЕСОК','С-БУР','ЛИВН',
+  '??','ОБЛН','ЛИВН','ЯСНО'
 ];
+
+const WEATHER_CN = ['多云','阵雨','雪','晴','阴',
+  '小雨','小雪','雨','雪','大雪',
+  '大雨','沙尘','雨夹雪','雾','霾',
+  '雷阵雨','暴雪','扬尘','暴雨','冰雹',
+  '雷雨雹','特大雨','浮尘','强沙尘','雨暴',
+  '未知','多云','阵雨','晴'
+];
+
+const WEATHER_DE = ['WOLK','SCHAU','SCHNE','SONNE','BEWT',
+  'L-REG','L-SCH','REGEN','SCHNE','S-SCH',
+  'S-REG','SAND','GRAUP','NEBL','DUNST',
+  'GEWIT','SCHST','STAUB','EXT-REG','HAGEL',
+  'G-HAG','S-REG','SAND','ST-SND','REGST',
+  'UNKWN','WOLK','SCHAU','KLAR'
+];
+
+const WEATHER_ES = ['NUBL','CHUB','NIEVE','SOL','CUBI',    // Cubierto
+  'L-LLV','L-NIV','LLUV','NIV','F-NIV', // Fuerte nieve
+  'F-LLV','ARENA','AGUAH','NIEB','CALI',
+  'TORM','NEVAS','POLVO','LLUV+','GRAN',
+  'T-GRN','LLUV+','ARENA','T-ARE','T-LLV',
+  'DESC','NUBL','CHUB','DESP'           // Despejado
+];
+
+
+// --- Labels ---
+const LABELS_EN = ['PWR', 'STP', 'HR'];
+const LABELS_RU = ['БАТ', 'ШАГ', 'ЧСС'];
+const LABELS_CN = ['电量', '步数', '心率'];
+const LABELS_DE = ['AKK', 'SCH', 'CHS'];
+const LABELS_ES = ['BAT', 'PAS', 'FC']; // FC = Frecuencia cardíaca
+
+
+// --- Sun state ---
+const SUNSTATES_EN = ['SPACE','NGHT','DAY'];
+const SUNSTATES_RU = ['КОСМ','НОЧЬ','ДЕНЬ'];
+const SUNSTATES_CN = ['太空','夜','日'];
+const SUNSTATES_DE = ['ALL','NCHT','TAG'];
+const SUNSTATES_ES = ['ESP','NCHE','DIA'];
+
+
+// Single-character time labels: [hours, minutes]
+const TIME_LABELS_EN = ['H', 'M'];
+const TIME_LABELS_RU = ['Ч', 'М'];   // Часы, Минуты
+const TIME_LABELS_CN = ['时', '分'];  // 小时, 分钟
+const TIME_LABELS_DE = ['H', 'M'];   // Stunde → H, Minute → M
+const TIME_LABELS_ES = ['H', 'M'];   // Hora → H, Minuto → M
+
+export const WEEKDAYS = isRusLang
+  ? WEEKDAYS_RU
+  : isCnLang
+    ? WEEKDAYS_EN
+    : isDeLang
+      ? WEEKDAYS_EN
+      : isEsLang
+        ? WEEKDAYS_ES
+        : WEEKDAYS_EN;
+export const MONTHS = isRusLang
+  ? MONTHS_RU
+  : isCnLang
+    ? MONTHS_EN
+    : isDeLang
+      ? MONTHS_DE
+      : isEsLang
+        ? MONTHS_ES
+        : MONTHS_EN;
+export const WEATHER_NAMES = isRusLang
+  ? WEATHER_RU
+  : isCnLang
+    ? WEATHER_EN
+    : isDeLang
+      ? WEATHER_DE
+      : isEsLang
+        ? WEATHER_ES
+        : WEATHER_EN;
+export const LABELS = isRusLang
+  ? LABELS_RU
+  : isCnLang
+    ? LABELS_EN
+    : isDeLang
+      ? LABELS_DE
+      : isEsLang
+        ? LABELS_ES
+        : LABELS_EN;
+export const SUNSTATES = isRusLang
+  ? SUNSTATES_RU
+  : isCnLang
+    ? SUNSTATES_EN
+    : isDeLang
+      ? SUNSTATES_DE
+      : isEsLang
+        ? SUNSTATES_ES
+        : SUNSTATES_EN;
+
+export const TIME_LABELS = isRusLang
+  ? TIME_LABELS_RU
+  : isCnLang
+    ? TIME_LABELS_EN
+    : isDeLang
+      ? TIME_LABELS_DE
+      : isEsLang
+        ? TIME_LABELS_ES
+        : TIME_LABELS_EN;
 

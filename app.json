@@ -1,19 +1,19 @@
 {
   "configVersion": "v3",
   "app": {
-    "appId": 1082792,
-    "appName": "Hands8",
+    "appId": 1082812,
+    "appName": "Devel",
     "appType": "watchface",
     "version": {
       "code": 3,
-      "name": "1.0.19"
+      "name": "1.0.40"
     },
     "icon": "icon.png",
     "vender": "dtsd",
     "cover": [
       "cover.png"
     ],
-    "description": "Hands8 watchface. Derived from here: https://github.com/novvember/amazfit-watchfaces"
+    "description": "Devel watchface. Derived from here: https://github.com/novvember/amazfit-watchfaces"
   },
   "runtime": {
     "apiVersion": {
@@ -44,13 +44,13 @@
   },
   "i18n": {
     "en-US": {
-      "appName": "Hands8"
+      "appName": "Devel"
     },
     "ru-RU": {
-      "appName": "Hands8"
+      "appName": "Devel"
     },
     "uk-UA": {
-      "appName": "Hands8"
+      "appName": "Devel"
     }
   },
   "defaultLanguage": "en-US",
