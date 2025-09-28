@@ -2,8 +2,8 @@
 
 ![Preview](preview.png)
 
-A round watchface for Zepp OS, based on the original **Horizon** watchface from [novvember/amazfit-watchfaces](https://github.com/novvember/amazfit-watchfaces).  
-This version is adapted for Zepp OS smartwatches and designed to match the **Amazfit Cheetah Round** aesthetic.
+A round watchface for Zepp OS with focus on readability and performance! Adapted for Zepp OS smartwatches and designed to match the **Amazfit Cheetah Round** aesthetic.
+Based on the original **Horizon** watchface from [novvember/amazfit-watchfaces](https://github.com/novvember/amazfit-watchfaces).  
 
 ## Features
 
