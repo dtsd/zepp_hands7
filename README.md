@@ -11,16 +11,14 @@ This version is adapted for Zepp OS smartwatches and designed to match the **Ama
 - **Analog display** with hour, minute, and second hands
 - **Always-On Display (AOD)** supported
 - **Edge widgets** showing:
-  - Year
-  - Month
-  - Day of the week
-  - Day of the month
-- **Activity and health indicators**:
+  - Date
   - Current weather
   - Battery level
+  - Current and maximum heart rate
   - Step counter
-  - Current heart rate
+  - Time till next to sunset or sunrise
 - **Color palette** designed to match the Amazfit Cheetah Round
+- **Multilanguage** support: English, Russian, Deutch and Spanish languages are supported!
 
 ## Installation
 
